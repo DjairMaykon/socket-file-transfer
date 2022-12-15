@@ -2,7 +2,7 @@ import socket
 import os
 import shutil
 
-PORT = 8082
+PORT = 8080
 HOST = 'localhost'
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -45,7 +45,19 @@ while True:
         for f in os.scandir(filesReceivedPath):
             if f.is_dir():
                 filesReceivedDirList.append(f.name.split('_folder')[0])
-        print(','.join(filesReceivedDirList).encode())
         con.send(','.join(filesReceivedDirList).encode())
+    elif option == 'RESTORE':
+        filename = dataArray[1]
+        filePath = f'{filesReceivedPath}/{filename}_folder/{filename}'
+
+        if not os.path.isfile(filePath):
+            con.send('File not found'.encode())
+        else:
+            with open(filePath, "rb") as readFile:
+                while True:
+                    fileBytes = readFile.read(1024)
+                    if not fileBytes:
+                        break
+                    con.sendall(fileBytes)
 
     con.close()

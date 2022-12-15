@@ -14,9 +14,12 @@ while True:
     elif option == '2':
         print('Iniciando modo recuperação\n')
 
-        serverFiles = listServerFiles()
-        print('Selecione um arquivo para recuperação:')
-        fileSelected = input(', '.join(serverFiles))
+        serverFiles = ', '.join(listServerFiles())
+        print('Selecione um arquivo para recuperação')
+        fileSelected = input(f'{serverFiles}: ')
+
+        restoreFile(fileSelected)
 
     elif option == '0':
         print('Encerrando aplicação\n')
+        break;
