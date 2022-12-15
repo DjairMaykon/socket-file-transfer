@@ -1,6 +1,6 @@
 import socket
 
-PORT = 8800
+PORT = 8082
 HOST = 'localhost'
 
 def depositFile(filename, tolerancia):
@@ -23,3 +23,16 @@ def depositFile(filename, tolerancia):
 
     sock.close()
     print('Connection Closed.')
+
+def listServerFiles():
+    sock = socket.socket()
+    sock.connect((HOST, PORT))
+    print('Connection Established.')
+    
+    sock.send(f'LIST'.encode())
+    response = sock.recv(1024).decode()
+
+    sock.close()
+    print('Connection Closed.')
+
+    return response.split(',')

@@ -13,5 +13,10 @@ while True:
 
     elif option == '2':
         print('Iniciando modo recuperação\n')
+
+        serverFiles = listServerFiles()
+        print('Selecione um arquivo para recuperação:')
+        fileSelected = input(', '.join(serverFiles))
+
     elif option == '0':
         print('Encerrando aplicação\n')
